@@ -42,6 +42,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const notion = require("@notionhq/client");
 
 app.use(
   cors({
@@ -66,13 +67,13 @@ app.post('/api-create-database', async (req, res) => {
       "https://api.notion.com/v1/databases",
       {
         headers: {
-          Authorization: "secret_i9GWbI3pNPT1P65znDCxhUVXG52golKm1lkjSB462WJ",
+          Authorization: new Client({ auth: import.meta.env.VITE_NOTION_KEY }),
           "Content-Type": "application/json",
           notion_version: "2022-06-28",
         },
         parent: {
           type: "database_id",
-          database_id: "daa2e649c8d84146acad051dc483731f",
+          database_id: import.meta.env.VITE_NOTION_DATABASE_ID,
         },
         properties: {
           "Club Name": { title: [{ text: { content: clubInfo.clubName } }] },
