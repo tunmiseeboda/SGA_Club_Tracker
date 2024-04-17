@@ -64,10 +64,7 @@ app.post('/api-create-database', async (req, res) => {
   const clubInfo = req.body;
   console.log("clubInfo", clubInfo);
 
-  const notionKey='secret_Qa81KgnRQWmoG8n1JtJ7PUNr6kDpQqnddunri3rxP2R'
 
-  console.log(notionKey)
-  console.log(config.notionDatabaseId)
   try {
     // Make a request to the Notion API to create the page
     // Replace 'YOUR_NOTION_API_KEY' with your actual Notion API key
@@ -75,7 +72,7 @@ app.post('/api-create-database', async (req, res) => {
       "https://api.notion.com/v1/databases/",
       {
         headers: {
-          Authorization: notionKey,
+          Authorization: config.notionKey,
           "Content-Type": "application/json",
           notion_version: "2022-06-28",
         },
