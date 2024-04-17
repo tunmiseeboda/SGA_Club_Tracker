@@ -118,7 +118,7 @@ async function createNotionPage() {
 
 
   try {
-    const response = await fetch('http://localhost:3001/api-create-database', {
+    const response = await fetch('http://localhost:3001/api-create-database/', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

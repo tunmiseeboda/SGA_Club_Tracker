@@ -38,11 +38,14 @@
 
 const express = require("express");
 const axios = require("axios");
+const config = require('./config.cjs');
+
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = config.port;
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const notion = require("@notionhq/client");
+
+
 
 app.use(
   cors({
@@ -60,20 +63,25 @@ app.post('/api-create-database', async (req, res) => {
   const { clubName, costCenter, amountSpent, amountApproved, date, notes } = req.body;
   const clubInfo = req.body;
   console.log("clubInfo", clubInfo);
+
+  const notionKey='secret_Qa81KgnRQWmoG8n1JtJ7PUNr6kDpQqnddunri3rxP2R'
+
+  console.log(notionKey)
+  console.log(config.notionDatabaseId)
   try {
     // Make a request to the Notion API to create the page
     // Replace 'YOUR_NOTION_API_KEY' with your actual Notion API key
     const response = await axios.post(
-      "https://api.notion.com/v1/databases",
+      "https://api.notion.com/v1/databases/",
       {
         headers: {
-          Authorization: new Client({ auth: import.meta.env.VITE_NOTION_KEY }),
+          Authorization: notionKey,
           "Content-Type": "application/json",
           notion_version: "2022-06-28",
         },
         parent: {
           type: "database_id",
-          database_id: import.meta.env.VITE_NOTION_DATABASE_ID,
+          database_id: config.notionDatabaseId
         },
         properties: {
           "Club Name": { title: [{ text: { content: clubInfo.clubName } }] },
@@ -87,6 +95,7 @@ app.post('/api-create-database', async (req, res) => {
         },
       },
     );
+    
 
     // Respond with the data received from the Notion API
     res.json(response.data);
