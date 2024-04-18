@@ -15,13 +15,13 @@
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "cors-anywhere": "^0.4.4",
-    "dotenv": "^16.4.5",
     "env": "^0.0.2",
     "express": "^4.19.2",
     "vue": "^3.4.21"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
+    "dotenv": "^16.4.5",
     "vite": "^5.2.0"
   },
   "description": "This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.",

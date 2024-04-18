@@ -1,15 +1,23 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import dotenv from "dotenv";
 
+dotenv.config();
+
+
+const notionKey = process.env.VITE_NOTION_KEY;
+const notionDatabaseId = process.env.VITE_NOTION_DATABASE_ID;
+
+console.log(notionKey, notionDatabaseId);
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/SGA_Club_Tracker/',
+  base: "/SGA_Club_Tracker",
   plugins: [vue()],
 
   define: {
-    'process.env.VITE_NOTION_KEY': JSON.stringify('your-notion-api-key'),
-    'process.env.VITE_NOTION_DATABASE_ID': JSON.stringify('your-notion-database-id'),
+    "process.env.VITE_NOTION_KEY": JSON.stringify(notionKey),
+    "process.env.VITE_NOTION_DATABASE_ID": JSON.stringify(notionDatabaseId),
   },
-  
-})
+});
+
 
