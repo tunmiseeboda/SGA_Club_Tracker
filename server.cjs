@@ -32,35 +32,34 @@ app.post('/api-create-database', async (req, res) => {
   const { clubName, costCenter, amountSpent, amountApproved, date, notes } = req.body; // Destructure the clubInfo object from the request body
   const clubInfo = req.body; // Get the clubInfo object from the request body
 
+  const amountLeftover = parseFloat(clubInfo.amountApproved) - parseFloat(clubInfo.amountSpent);
+
 
 
   try {
     // Make a request to the Notion API to create the page
     const response = await axios.post( 
-      "https://api.notion.com/v1/databases/", 
+      "https://api.notion.com/v1/pages/", 
       {
-        headers: {
-          Authorization: config.notionKey,
-          "Content-Type": "application/json",
-          notion_version: "2022-06-28",
-        },
-        parent: {
-          type: "database_id",
-          database_id: config.notionDatabaseId
-        },
-        properties: {
-          "Club Name": { title: [{ text: { content: clubInfo.clubName } }] },
-          "Cost Center": {
-            rich_text: [{ text: { content: clubInfo.costCenter } }],
-          },
-          "Amount Spent": { number: parseFloat(clubInfo.amountSpent) },
-          "Amount Approved": { number: parseFloat(clubInfo.amountApproved) },
-          "Date": { date: { start: clubInfo.date } },
-          "Notes": { rich_text: [{ text: { content: clubInfo.notes } }] },
+        "parent": {"database_id": config.notionDatabaseId},
+        "properties": {
+          "Club Name": {"title": [{"text": {"content": clubInfo.clubName } }] },
+          "Cost Center": {"rich_text": [{"text": {"content": clubInfo.costCenter } }],},
+          "Amount Spent": {"number": parseFloat(clubInfo.amountSpent) },
+          "Amount Approved": {"number": parseFloat(clubInfo.amountApproved) },
+          "Amount Leftover": {"number": amountLeftover},
+          "Date": {"date": {"start": clubInfo.date } },
+          "Notes": {"rich_text": [{"text": {"content": clubInfo.notes } }] },
         },
       },
+      {
+      headers: {
+          Authorization:`Bearer ${config.notionKey}`,
+          "Content-Type": "application/json",
+          "Notion-Version": "2021-05-13",
+        }
+      }
     );
-    console.log("response", response); // Log the response data
 
     // Respond with the data received from the Notion API
     res.json(response.data);

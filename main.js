@@ -3,7 +3,6 @@ const $ = (selector) => document.querySelector(selector);
 
 // Function to create a Notion page
 async function createNotionPage() {
-  console.log(" i am in createNotionPage");
   const clubInfo = {
     clubName: $("#Club-Name").value,
     costCenter: $("#Cost-Center").value,
@@ -34,7 +33,6 @@ async function createNotionPage() {
         notes: clubInfo.notes,
       }),
     });
-    console.log("response", response);
 
 
    // Throw an error if the response is not OK
@@ -44,8 +42,6 @@ async function createNotionPage() {
 
     // Log the data received from the server
     const data = await response.json();
-    console.log("Notion page created:", data); // Log the data received from the server
-
     // catch block to handle errors
   } catch (error) {
     console.error("Error creating Notion page:", error);
@@ -67,7 +63,6 @@ function clearEntries() {
 const submitButton = document.querySelector('button[type="submit"]');
 const clearButton = document.querySelector('button[type="reset"]');
 submitButton.addEventListener("click", async () => {
-  console.log(" i am in submitButton");
   await createNotionPage();
 });
 clearButton.addEventListener("click", () => {
